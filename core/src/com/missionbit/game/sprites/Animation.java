@@ -28,6 +28,7 @@ public class Animation {
             frame++;
             currentFrameTime = 0;
         }
+
         if(frame >= frameCount) {
             frame = 0;
         }

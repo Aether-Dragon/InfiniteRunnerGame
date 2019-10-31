@@ -26,9 +26,9 @@ public class PlayState extends State {
 
     public PlayState(states.GameStateManager gsm) {
         super(gsm);
-        bird = new Bird(50, 300);
+        bird = new bird(50, 300);
 //        bird = new Texture ("bird.png");
-        cam.setToOrtho(false, FlappyDemo.WIDTH / 2, FlappyDemo.HEIGHT / 2);
+        cam.setToOrtho(false, InfiniteRunner.WIDTH / 2, InfiniteRunner.HEIGHT / 2);
         bg = new Texture("bg.png");
         ground = new Texture("ground.png");
         groundPos1 = new Vector2(cam.position.x - cam.viewportWidth / 2, GROUND_Y_OFFSET);
@@ -62,7 +62,7 @@ public class PlayState extends State {
                 tube.reposition(tube.getPosTopTube().x + ((Tube.TUBE_WIDTH + TUBE_SPACING) * TUBE_COUNT));
             }
 
-            if(tube.collides(bird.getBounds()))
+            if(puddle.collides(bird.getBounds()))
                 gsm.set(new PlayState(gsm));
         }
         if(bird.getPosition().y <+ ground.getHeight() + GROUND_Y_OFFSET)

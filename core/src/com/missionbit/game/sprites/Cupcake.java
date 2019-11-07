@@ -9,8 +9,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 public class Cupcake {
-    public final static int GRAVTIY = -10;
-    public final static int MOVEMENT = 0;
+    public final static int GRAVITY = -10;
+    public final static int MOVEMENT = 50;
     private Vector3 position;
     private Vector3 velocity;
     private Rectangle bounds;
@@ -30,7 +30,7 @@ public class Cupcake {
         //cupcakeAnimation.update(dt);
 
         if(position.y > 20) {
-            velocity.add(0, GRAVTIY, 0);
+            velocity.add(0, GRAVITY, 0);
         }
         velocity.scl(dt);
         position.add(MOVEMENT * dt, velocity.y, 0);

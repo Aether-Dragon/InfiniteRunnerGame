@@ -1,7 +1,6 @@
 package com.missionbit.game.states;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.missionbit.game.State;
 
 import java.util.Stack;
 

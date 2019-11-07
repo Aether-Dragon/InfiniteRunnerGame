@@ -3,15 +3,15 @@ package com.missionbit.game.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.missionbit.game.State;
 
 public class MenuState extends State {
     private Texture background;
     private Texture playBtn;
 
 
-    public MenuState(states.GameStateManager gsm) {
+    public MenuState(GameStateManager gsm) {
         super(gsm);
+        //TODO: Get new background
         background = new Texture("bg.png");
         playBtn = new Texture("playBtn.png");
     }

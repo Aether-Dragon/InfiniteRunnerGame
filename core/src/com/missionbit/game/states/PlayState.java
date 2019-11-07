@@ -68,9 +68,11 @@ public class PlayState extends State {
 
         if(cupcake.getPosition().y <+ ground.getHeight() + GROUND_Y_OFFSET)
             gsm.set(new PlayState(gsm));
-        cam.update();
 
          */
+        cam.update();
+
+
     }
 
 
@@ -80,7 +82,7 @@ public class PlayState extends State {
     public void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(bg, 0, 0);
+        sb.draw(bg, cam.position.x - (cam.viewportWidth / 2), 0);
         sb.draw(cupcake.getTexture(), cupcake.getPosition().x, cupcake.getPosition().y);
         /*
         for(Tube tube : tubes) {

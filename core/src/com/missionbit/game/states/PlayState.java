@@ -25,7 +25,6 @@ public class PlayState extends State {
     public PlayState(GameStateManager gsm) {
         super(gsm);
         cupcake = new Cupcake(50, 200);
-        cam.setToOrtho(false, InfiniteRunner.WIDTH / 2, InfiniteRunner.HEIGHT / 2);
         bg = new Texture("bg.png");
         //ground = new Texture("ground.png");
         //groundPos1 = new Vector2(cam.position.x - cam.viewportWidth / 2, GROUND_Y_OFFSET);
@@ -81,7 +80,7 @@ public class PlayState extends State {
     public void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(bg, cam.position.x - (cam.viewportWidth / 2), 0);
+        sb.draw(bg, 0, 0);
         sb.draw(cupcake.getTexture(), cupcake.getPosition().x, cupcake.getPosition().y);
         /*
         for(Tube tube : tubes) {

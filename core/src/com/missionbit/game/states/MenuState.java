@@ -9,9 +9,9 @@ public class MenuState extends State {
     private Texture playBtn;
 
 
+
     public MenuState(GameStateManager gsm) {
         super(gsm);
-        //TODO: Get new background
         background = new Texture("bg.png");
         playBtn = new Texture("playBtn.png");
     }
@@ -25,14 +25,16 @@ public class MenuState extends State {
 
     @Override
     public void update(float dt) {
+        cam.update();
         handleInput();
     }
 
     @Override
     public void render(SpriteBatch sb) {
+        System.out.println("Menu State rendering");
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(background, 0,0);
+        sb.draw(background, 0,0, 530, 350);
         sb.draw(playBtn, (cam.position.x - playBtn.getWidth() / 2), cam.position.y);
         sb.end();
 

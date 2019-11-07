@@ -24,12 +24,12 @@ public class PlayState extends State {
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
-        cupcake = new Cupcake(50, 300);
+        cupcake = new Cupcake(50, 200);
         cam.setToOrtho(false, InfiniteRunner.WIDTH / 2, InfiniteRunner.HEIGHT / 2);
         bg = new Texture("bg.png");
-        ground = new Texture("ground.png");
-        groundPos1 = new Vector2(cam.position.x - cam.viewportWidth / 2, GROUND_Y_OFFSET);
-        groundPos2 = new Vector2((cam.position.x - cam.viewportWidth / 2) + ground.getWidth(), GROUND_Y_OFFSET);
+        //ground = new Texture("ground.png");
+        //groundPos1 = new Vector2(cam.position.x - cam.viewportWidth / 2, GROUND_Y_OFFSET);
+        //groundPos2 = new Vector2((cam.position.x - cam.viewportWidth / 2) + ground.getWidth(), GROUND_Y_OFFSET);
 
         //tubes = new Array<Tube>();
 
@@ -49,7 +49,7 @@ public class PlayState extends State {
     @Override
     public void update(float dt) {
         handleInput();
-        updateGround();
+        //updateGround();
         cupcake.update(dt);
 
         cam.position.x = cupcake.getPosition().x + 80;
@@ -66,10 +66,12 @@ public class PlayState extends State {
                 gsm.set(new PlayState(gsm));
         }
 
-         */
+
         if(cupcake.getPosition().y <+ ground.getHeight() + GROUND_Y_OFFSET)
             gsm.set(new PlayState(gsm));
         cam.update();
+
+         */
     }
 
 
@@ -88,8 +90,8 @@ public class PlayState extends State {
         }
 
          */
-        sb.draw(ground, groundPos1.x, groundPos1.y);
-        sb.draw(ground, groundPos2.x, groundPos2.y);
+        //sb.draw(ground, groundPos1.x, groundPos1.y);
+        //sb.draw(ground, groundPos2.x, groundPos2.y);
         sb.end();
     }
 
@@ -97,7 +99,7 @@ public class PlayState extends State {
     public void dispose() {
         bg.dispose();
         cupcake.dispose();
-        ground.dispose();
+        //ground.dispose();
         /*
         for(Tube tube : tubes)
             tube.dispose();
@@ -106,10 +108,13 @@ public class PlayState extends State {
         System.out.println("Play State Disposed");
 
     }
+    /*
     private void updateGround(){
         if(cam.position.x - (cam.viewportWidth / 2) > groundPos1.x + ground.getWidth())
             groundPos1.add(ground.getWidth() * 2, 0);
         if(cam.position.x - (cam.viewportWidth / 2) > groundPos2.x + ground.getWidth())
             groundPos2.add(ground.getWidth() * 2, 0);
     }
+
+     */
 }

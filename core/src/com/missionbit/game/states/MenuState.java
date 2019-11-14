@@ -9,6 +9,7 @@ public class MenuState extends State {
     private Texture playBtn;
 
 
+
     public MenuState(GameStateManager gsm) {
         super(gsm);
         background = new Texture("bg.png");
@@ -24,6 +25,7 @@ public class MenuState extends State {
 
     @Override
     public void update(float dt) {
+        cam.update();
         handleInput();
     }
 
@@ -31,7 +33,7 @@ public class MenuState extends State {
     public void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(background, 0,0);
+        sb.draw(background, 0,0, 530, 350);
         sb.draw(playBtn, (cam.position.x - playBtn.getWidth() / 2), cam.position.y);
         sb.end();
 

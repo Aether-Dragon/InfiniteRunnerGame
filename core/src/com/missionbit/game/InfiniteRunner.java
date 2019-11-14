@@ -8,8 +8,8 @@ import com.missionbit.game.states.GameStateManager;
 import com.missionbit.game.states.MenuState;
 
 public class InfiniteRunner extends ApplicationAdapter {
-	public static final int WIDTH = 1060;
-	public static final int HEIGHT = 700;
+	public static final int WIDTH = 530;
+	public static final int HEIGHT = 350;
 	public static final String TITLE = "Cupcake Run";
 	private GameStateManager gsm;
 	private SpriteBatch batch;

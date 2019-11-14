@@ -1,7 +1,6 @@
 package com.missionbit.game.states;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.missionbit.game.State;
 
 import java.util.Stack;
 
@@ -22,7 +21,7 @@ public class GameStateManager {
 
     }
     public void set(State state) {
-        states.pop().dispose();
+        pop();
         states.push(state);
     }
 

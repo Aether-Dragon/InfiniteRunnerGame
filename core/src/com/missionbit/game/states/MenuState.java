@@ -3,14 +3,14 @@ package com.missionbit.game.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.missionbit.game.State;
 
 public class MenuState extends State {
     private Texture background;
     private Texture playBtn;
 
 
-    public MenuState(states.GameStateManager gsm) {
+
+    public MenuState(GameStateManager gsm) {
         super(gsm);
         background = new Texture("bg.png");
         playBtn = new Texture("playBtn.png");
@@ -25,6 +25,7 @@ public class MenuState extends State {
 
     @Override
     public void update(float dt) {
+        cam.update();
         handleInput();
     }
 
@@ -32,7 +33,7 @@ public class MenuState extends State {
     public void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(background, 0,0);
+        sb.draw(background, 0,0, 530, 350);
         sb.draw(playBtn, (cam.position.x - playBtn.getWidth() / 2), cam.position.y);
         sb.end();
 

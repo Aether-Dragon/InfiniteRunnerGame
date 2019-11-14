@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.missionbit.game.InfiniteRunner;
 import com.missionbit.game.State;
+import com.missionbit.game.sprites.Bird;
 
 import sprites.Bird;
 import sprites.Tube;

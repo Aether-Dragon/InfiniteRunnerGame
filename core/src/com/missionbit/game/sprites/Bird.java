@@ -29,7 +29,6 @@ public class Bird {
         // starting x-point = i
         // ending x-point = -i
         // starting/ending y-point = j
-
         velocity = new Vector2(0, -100);
 
     }
@@ -37,7 +36,6 @@ public class Bird {
 
     public void update(float dt) {
         birdAnimation.update(dt);
-
         if (velocity.y < 0) {
             velocity.y += 1;
         } else {
@@ -59,7 +57,7 @@ public class Bird {
     public TextureRegion getTexture() {
         return birdAnimation.getFrame();
     }
-
+  
     public Vector2 getPosition() {
         return position;
     }

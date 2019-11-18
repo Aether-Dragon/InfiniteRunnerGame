@@ -20,14 +20,14 @@ public class Cupcake {
     public Cupcake(int x, int y ) {
         position = new Vector3(x, y, 0);
         velocity = new Vector3(0, 0, 0);
-        texture = new Texture("cupcakeholder.png");
-        //cupcakeAnimation = new Animation(new TextureRegion(texture), 3, 0.5f);
-        bounds = new Rectangle(x, y, texture.getWidth() / 3, texture.getHeight());
+        texture = new Texture("cupcake.png");
+        cupcakeAnimation = new Animation(new TextureRegion(texture), 6, 0.5f);
+        bounds = new Rectangle(x, y, texture.getWidth(), texture.getHeight() / 6);
 
     }
 
     public void update(float dt) {
-        //cupcakeAnimation.update(dt);
+        cupcakeAnimation.update(dt);
 
         if(position.y > 20) {
             velocity.add(0, GRAVITY, 0);
@@ -46,9 +46,9 @@ public class Cupcake {
 
     public Vector3 getPosition() { return position; }
 
-    public Texture getTexture() {
-        //return cupcakeAnimation.getFrame();
-        return texture;
+    public TextureRegion getTexture() {
+        return cupcakeAnimation.getFrame();
+
     }
 
     public void jump() {

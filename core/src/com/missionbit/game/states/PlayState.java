@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.missionbit.game.InfiniteRunner;
+import com.missionbit.game.sprites.Bird;
 import com.missionbit.game.sprites.Cupcake;
 import com.missionbit.game.sprites.Puddle;
 
@@ -19,6 +20,7 @@ public class PlayState extends State {
 
     private Cupcake cupcake;
     private Texture bg;
+    private Bird bird;
     //TODO: fix puddle spacing
     private Array<Puddle> puddles;
     private Random rand;
@@ -27,6 +29,7 @@ public class PlayState extends State {
         super(gsm);
         cupcake = new Cupcake(50, 0);
         bg = new Texture("bg.png");
+        bird = new Bird(100, 200);
 
         puddles = new Array<Puddle>();
         rand = new Random();
@@ -47,6 +50,7 @@ public class PlayState extends State {
     public void update(float dt) {
         handleInput();
         cupcake.update(dt);
+        bird.update(dt);
 
         cam.position.x = cupcake.getPosition().x + 80;
 
@@ -74,10 +78,9 @@ public class PlayState extends State {
         sb.begin();
         sb.draw(bg, cam.position.x - (cam.viewportWidth / 2), 0);
         sb.draw(cupcake.getTexture(), cupcake.getPosition().x, cupcake.getPosition().y);
-
+        sb.draw(bird.getTexture(), bird.getPosition().x, bird.getPosition().y);
         for(Puddle puddle : puddles) {
             sb.draw(puddle.getPuddle(), puddle.getPosPuddle().x, puddle.getPosPuddle().y);
-
         }
 
         sb.end();

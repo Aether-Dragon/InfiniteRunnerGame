@@ -63,6 +63,4 @@ public class Bird {
     public Vector2 getPosition() {
         return position;
     }
-
-
 }

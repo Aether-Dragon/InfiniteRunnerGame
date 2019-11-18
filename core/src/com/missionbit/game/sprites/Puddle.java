@@ -3,19 +3,23 @@ package com.missionbit.game.sprites;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+
 
 public class Puddle {
-    public static final int PUDDLES = 4;
-    public static final int GAP_MIN = 100;
-    public static final int GAP_MAX = 300;
-    private Texture texture;
-    private Rectangle bounds ;
+    public static final int PUDDLE_WIDTH = 64;
+
+    private Texture puddle;
+    private Vector2 posPuddle;
+    private Rectangle bounds;
     private Animation puddleAnimation;
 
-    public Puddle(int x, int y) {
-        texture = new Texture("puddleAnimation.png");
-        puddleAnimation = new Animation(new TextureRegion(texture), 3, 0.5f);
-        bounds = new Rectangle(x, y, puddleAnimation.getFrame().getRegionHeight(), texture.getHeight());
+
+    public Puddle(int x) {
+        puddle = new Texture("puddleAnimation.png");
+        posPuddle = new Vector2(x, 5);
+        puddleAnimation = new Animation(new TextureRegion(puddle), 6, 0.25f);
+        bounds = new Rectangle(x, posPuddle.y - 8, puddle.getWidth(), puddleAnimation.getFrame().getRegionHeight());
     }
 
 
@@ -23,11 +27,23 @@ public class Puddle {
         puddleAnimation.update(dt);
     }
 
+    public void reposition(float x) {
+        posPuddle.set(x, 5);
+        bounds.setPosition(posPuddle.x, posPuddle.y);
+    }
 
-    public TextureRegion getTexture() {
+    public boolean collides(Rectangle player) {
+        return player.overlaps(bounds);
+    }
+
+    public TextureRegion getPuddle() {
         return puddleAnimation.getFrame();
     }
 
+    public Vector2 getPosPuddle() {
+        return posPuddle;
+    }
 
+    public void dispose() { puddle.dispose(); }
 }
 

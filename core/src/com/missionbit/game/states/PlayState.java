@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Queue;
 import com.missionbit.game.InfiniteRunner;
 import com.missionbit.game.sprites.Bird;
 import com.missionbit.game.sprites.Cupcake;
@@ -22,25 +23,25 @@ public class PlayState extends State {
     private Texture bg;
     //private Bird bird;
     //TODO: fix puddle spacing
+    private Queue<Bird> birds;
     private Array<Puddle> puddles;
     private Random rand;
-    private Array<Bird> birds;
+    private float spawn;
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
         cupcake = new Cupcake(50, 0);
         bg = new Texture("bg.png");
-        birds = new Array<>();
+        birds = new Queue<>();
         puddles = new Array<>();
+        spawn = 0;
         rand = new Random();
 
         for(int i = 1; i <= PUDDLE_COUNT; i++){
             puddles.add(new Puddle(i * ((rand.nextInt(GAP_MAX) + GAP_MIN) + Puddle.PUDDLE_WIDTH)));
         }
 
-        for(int i = 1; i <= BIRD_COUNT; i++){
-            birds.add(new Bird(i * ((rand.nextInt(GAP_MAX) + GAP_MIN) + Bird.BIRD_WIDTH), 100));
-        }
+
 
     }
 
@@ -54,6 +55,13 @@ public class PlayState extends State {
     public void update(float dt) {
         handleInput();
         cupcake.update(dt);
+        if (spawn > 5) {
+            spawn = 0;
+            birds.addLast(new Bird((int)(cam.position.x + cam.viewportWidth / 2), 100));
+
+        } else {
+            spawn += dt;
+        }
         for (Bird b: birds)
         {
             b.update(dt);

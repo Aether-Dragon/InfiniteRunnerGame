@@ -22,7 +22,7 @@ public class Cupcake {
         velocity = new Vector3(0, 0, 0);
         texture = new Texture("cupcake.png");
         cupcakeAnimation = new Animation(new TextureRegion(texture), 6, 0.5f);
-        bounds = new Rectangle(x, y, texture.getWidth(), texture.getHeight() / 6);
+        bounds = new Rectangle(x + 8, y, texture.getWidth() - 4, texture.getHeight() / 6);
 
     }
 
@@ -53,7 +53,7 @@ public class Cupcake {
 
     public void jump() {
         if (position.y <= 175) {
-            velocity.y = 175;
+            velocity.y = 195;
         }
     }
 

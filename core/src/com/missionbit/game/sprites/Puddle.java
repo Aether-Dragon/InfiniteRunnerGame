@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 
 
 public class Puddle {
-    public static final int PUDDLE_WIDTH = 64;
+    public static final int PUDDLE_WIDTH = 128;
 
     private Texture puddle;
     private Vector2 posPuddle;
@@ -19,7 +19,7 @@ public class Puddle {
         puddle = new Texture("puddleAnimation.png");
         posPuddle = new Vector2(x, 5);
         puddleAnimation = new Animation(new TextureRegion(puddle), 6, 0.25f);
-        bounds = new Rectangle(x, posPuddle.y - 8, puddle.getWidth(), puddleAnimation.getFrame().getRegionHeight());
+        bounds = new Rectangle(x + 6, posPuddle.y - 8, puddle.getWidth() - 6, puddleAnimation.getFrame().getRegionHeight());
     }
 
 

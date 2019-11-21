@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 public class Cupcake {
-    public final static int GRAVITY = -5;
+    public final static int GRAVITY = -9;
     public final static int MOVEMENT = 80;
     private Vector3 position;
     private Vector3 velocity;

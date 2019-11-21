@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.missionbit.game.InfiniteRunner;
 
 public class Bird {
     public static final int BIRD = 4;
@@ -13,19 +11,20 @@ public class Bird {
     public static final int GAP_MAX = 300;
     private static final int GRAVITY = -15;
     private static final int MOVEMENT = 100;
-    private Vector2 start;
+    public static final int BIRD_WIDTH = 100;
+    private Vector2 posBird;
     private Vector2 position;
     private Vector2 velocity;
-    private Texture texture;
+    private Texture bird;
     private Rectangle bounds;
     private Animation birdAnimation;
 
     public Bird(int x, int y) {
-        texture = new Texture("seagull.png");
-        birdAnimation = new Animation(new TextureRegion(texture), 6, 0.5f);
-        bounds = new Rectangle(x, y, birdAnimation.getFrame().getRegionHeight(), texture.getHeight());
+        bird = new Texture("seagull.png");
+        birdAnimation = new Animation(new TextureRegion(bird), 6, 0.5f);
+        bounds = new Rectangle(x, y, bird.getWidth(), birdAnimation.getFrame().getRegionHeight());
         position = new Vector2(x, y);
-        start = new Vector2(x, y);
+        posBird = new Vector2(x, y);
         // starting x-point = i
         // ending x-point = -i
         // starting/ending y-point = j
@@ -47,18 +46,35 @@ public class Bird {
         }
         velocity.scl(dt);
         position.add(velocity);
-//        if (position.x != -start.x) {
-//            position.rotateAround(new Vector2(start.x - InfiniteRunner.WIDTH / 2, InfiniteRunner.HEIGHT), -0.3f);
-//        }
+
         velocity.scl(1/dt);
     }
+    public void reposition(float x) {
+        posBird.set(x, 5);
+        bounds.setPosition(posBird.x, posBird.y);
+    }
+    public boolean collides(Rectangle player) {
+        return player.overlaps(bounds);
+    }
+    public TextureRegion getBird() {
+        return birdAnimation.getFrame();
+    }
 
+    public Vector2 getPosBird() {
+        return posBird;
+    }
 
     public TextureRegion getTexture() {
         return birdAnimation.getFrame();
     }
-  
+
     public Vector2 getPosition() {
         return position;
     }
+
+    public void dispose() {
+        bird.dispose();
+    }
+
+
 }

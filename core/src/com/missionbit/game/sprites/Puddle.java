@@ -17,7 +17,7 @@ public class Puddle {
 
     public Puddle(int x) {
         puddle = new Texture("puddleAnimation.png");
-        posPuddle = new Vector2(x, 5);
+        posPuddle = new Vector2(x, 0);
         puddleAnimation = new Animation(new TextureRegion(puddle), 6, 0.25f);
         bounds = new Rectangle(x + 6, posPuddle.y - 8, puddle.getWidth() - 6, puddleAnimation.getFrame().getRegionHeight());
     }
@@ -28,7 +28,7 @@ public class Puddle {
     }
 
     public void reposition(float x) {
-        posPuddle.set(x, 5);
+        posPuddle.set(x, 0);
         bounds.setPosition(posPuddle.x, posPuddle.y);
     }
 

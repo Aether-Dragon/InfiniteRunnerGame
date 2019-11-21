@@ -13,7 +13,7 @@ public class RestartState extends State {
     public RestartState(GameStateManager gsm) {
         super(gsm);
         cam.setToOrtho(false, InfiniteRunner.WIDTH / 2, InfiniteRunner.HEIGHT / 2);
-        background = new Texture("bg.png");
+        background = new Texture("city.png");
         playBtn = new Texture("playBtn.png");
         gameOver = new Texture("gameover.png");
     }
@@ -34,7 +34,7 @@ public class RestartState extends State {
     public void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(background, 0,0);
+        sb.draw(background, 0,0, 265, 175);
         sb.draw(playBtn, cam.position.x - playBtn.getWidth() / 2, cam.position.y);
         sb.draw(gameOver, cam.position.x - gameOver.getWidth() / 2, cam.position.y - (playBtn.getHeight() / 2 + 50) );
         sb.end();

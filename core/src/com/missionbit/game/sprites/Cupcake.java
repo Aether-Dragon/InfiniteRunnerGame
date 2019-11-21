@@ -6,9 +6,11 @@ import com.badlogic.gdx.graphics.Texture;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 public class Cupcake {
+
     public final static int GRAVITY = -7;
     public final static int MOVEMENT = 100;
     private Vector3 position;
@@ -40,7 +42,7 @@ public class Cupcake {
 
         velocity.scl(1/dt);
 
-        bounds.setPosition(position.x, position.y);
+        bounds.setPosition(position.x + 3, position.y);
 
     }
 

@@ -7,13 +7,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class MenuState extends State {
     private Texture background;
     private Texture playBtn;
-
+    private Texture playText;
 
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
         background = new Texture("bg.png");
         playBtn = new Texture("playBtn.png");
+        playText = new Texture("play.png");
     }
 
     @Override
@@ -35,6 +36,7 @@ public class MenuState extends State {
         sb.begin();
         sb.draw(background, 0,0, 265, 175);
         sb.draw(playBtn, (cam.position.x - playBtn.getWidth() / 2), cam.position.y);
+        sb.draw(playText, (cam.position.x - playBtn.getWidth() / 2) - 3, (cam.position.y + playBtn.getHeight() / 2 + 25));
         sb.end();
 
 
@@ -44,6 +46,7 @@ public class MenuState extends State {
     public void dispose() {
         background.dispose();
         playBtn.dispose();
+        playText.dispose();
         System.out.println("Menu State Disposed");
 
     }

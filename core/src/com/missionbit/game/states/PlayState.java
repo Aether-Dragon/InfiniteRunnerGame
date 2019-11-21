@@ -40,9 +40,14 @@ public class PlayState extends State {
         spawn = 0;
         rand = new Random();
 
+        for(int i = 1; i <= PUDDLE_COUNT; i++){
+            if(i==1) {
+                puddles.add(new Puddle(i * (100 + Puddle.PUDDLE_WIDTH)));
 
-        for (int i = 1; i <= PUDDLE_COUNT; i++) {
-            puddles.add(new Puddle(i * ((rand.nextInt(GAP_MAX) + GAP_MIN) + Puddle.PUDDLE_WIDTH)));
+            } else {
+                puddles.add(new Puddle(i * ((rand.nextInt(GAP_MAX) + GAP_MIN) + Puddle.PUDDLE_WIDTH)));
+
+            }
         }
 
 

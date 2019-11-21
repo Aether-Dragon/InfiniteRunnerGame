@@ -10,8 +10,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 public class Cupcake {
-    public final static int GRAVITY = -5;
-    public final static int MOVEMENT = 80;
+
+    public final static int GRAVITY = -7;
+    public final static int MOVEMENT = 100;
     private Vector3 position;
     private Vector3 velocity;
     private Rectangle bounds;
@@ -23,8 +24,7 @@ public class Cupcake {
         velocity = new Vector3(0, 0, 0);
         texture = new Texture("cupcake.png");
         cupcakeAnimation = new Animation(new TextureRegion(texture), 6, 0.5f);
-        bounds = new Rectangle(x + 3, y, texture.getWidth() - 5, texture.getHeight() / 6);
-
+        bounds = new Rectangle(x + 8, y, texture.getWidth() - 4, texture.getHeight() / 6);
 
     }
 
@@ -54,8 +54,9 @@ public class Cupcake {
     }
 
     public void jump() {
+        
         if (position.y <= 175) {
-            velocity.y = 175;
+            velocity.y = 200;
         }
     }
 

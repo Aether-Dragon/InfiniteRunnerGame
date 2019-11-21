@@ -17,8 +17,8 @@ import java.util.Random;
 
 
 public class PlayState extends State {
-    public static final int GAP_MIN = 100;
-    public static final int GAP_MAX = 300;
+    public static final int GAP_MIN = 1;
+    public static final int GAP_MAX = 3;
     private static final int PUDDLE_COUNT = 4;
     public static final int BIRD_COUNT = 4;
     private Cupcake cupcake;
@@ -26,30 +26,20 @@ public class PlayState extends State {
     //private Bird bird;
     //TODO: fix puddle spacing
     private Queue<Bird> birds;
-    private Array<Puddle> puddles;
+    private Queue<Puddle> puddles;
     private Random rand;
-    private float spawn;
-
+    private float spawnBird;
+    private float spawnPuddle;
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
         cupcake = new Cupcake(50, 0);
         bg = new Texture("bg.png");
         birds = new Queue<>();
-        puddles = new Array<>();
-        spawn = 0;
+        puddles = new Queue<>();
+        spawnBird = 0;
+        spawnPuddle = 4;
         rand = new Random();
-
-        for(int i = 1; i <= PUDDLE_COUNT; i++){
-            if(i==1) {
-                puddles.add(new Puddle(i * (100 + Puddle.PUDDLE_WIDTH)));
-
-            } else {
-                puddles.add(new Puddle(i * ((rand.nextInt(GAP_MAX) + GAP_MIN) + Puddle.PUDDLE_WIDTH)));
-
-            }
-        }
-
 
     }
 
@@ -64,11 +54,11 @@ public class PlayState extends State {
         handleInput();
         cupcake.update(dt);
 
-        if (spawn > 5) {
-            spawn = 0;
+        if (spawnBird > 5) {
+            spawnBird = 0;
             birds.addLast(new Bird((int) (cam.position.x + cam.viewportWidth / 2), 100));
         } else {
-            spawn += dt;
+            spawnBird += dt;
         }
 
         for (Bird b : birds) {
@@ -78,14 +68,28 @@ public class PlayState extends State {
             }
         }
 
+        if (spawnPuddle > 6) {
+            spawnPuddle = rand.nextInt(GAP_MAX) + GAP_MIN;
+            puddles.addLast(new Puddle((int) (cam.position.x + cam.viewportWidth / 2)));
+        } else {
+            spawnPuddle += dt;
+        }
+
+        for (Puddle p : puddles) {
+            p.update(dt);
+            if (p.getPosition().x < cam.position.x - cam.viewportWidth / 2 - p.getTexture().getRegionWidth()) {
+                puddles.removeFirst().dispose();
+            }
+        }
+
         cam.position.x = cupcake.getPosition().x + 80;
 
         for (int i = 0; i < puddles.size; i++) {
             Puddle puddle = puddles.get(i);
 
-            if (cam.position.x - (cam.viewportWidth / 2) > puddle.getPosPuddle().x + Puddle.PUDDLE_WIDTH) {
-                puddle.reposition(puddle.getPosPuddle().x + ((rand.nextInt(GAP_MAX) + GAP_MIN) + Puddle.PUDDLE_WIDTH) * PUDDLE_COUNT);
-            }
+//            if (cam.position.x - (cam.viewportWidth / 2) > puddle.getPosition().x + Puddle.PUDDLE_WIDTH) {
+//                puddle.reposition(puddle.getPosition().x + ((rand.nextInt(GAP_MAX) + GAP_MIN) + Puddle.PUDDLE_WIDTH) * PUDDLE_COUNT);
+//            }
 
             if (puddle.collides(cupcake.getBounds()))
                 gsm.set(new RestartState(gsm));
@@ -116,7 +120,7 @@ public class PlayState extends State {
         sb.draw(cupcake.getTexture(), cupcake.getPosition().x, cupcake.getPosition().y);
 
         for (Puddle puddle : puddles) {
-            sb.draw(puddle.getPuddle(), puddle.getPosPuddle().x, puddle.getPosPuddle().y);
+            sb.draw(puddle.getTexture(), puddle.getPosition().x, puddle.getPosition().y);
         }
 
         for (Bird bird : birds) {

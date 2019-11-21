@@ -22,8 +22,9 @@ public class Bird {
     public Bird(int x, int y) {
         bird = new Texture("seagull.png");
         birdAnimation = new Animation(new TextureRegion(bird), 6, 0.5f);
-        bounds = new Rectangle(x, y, bird.getWidth(), birdAnimation.getFrame().getRegionHeight());
         position = new Vector2(x, y);
+        bounds = new Rectangle(position.x + 6, position.y, bird.getWidth() - 6, birdAnimation.getFrame().getRegionHeight() - 12);
+
         posBird = new Vector2(x, y);
         // starting x-point = i
         // ending x-point = -i
@@ -48,11 +49,14 @@ public class Bird {
         position.add(velocity);
 
         velocity.scl(1/dt);
+
+        bounds.x = position.x + 6;
+        bounds.y = position.y;
     }
-    public void reposition(float x) {
-        posBird.set(x, 5);
-        bounds.setPosition(posBird.x, posBird.y);
-    }
+//    public void reposition(float x) {
+//        posBird.set(x, 5);
+//        bounds.setPosition(posBird.x, posBird.y);
+//    }
     public boolean collides(Rectangle player) {
         return player.overlaps(bounds);
     }
@@ -60,9 +64,9 @@ public class Bird {
         return birdAnimation.getFrame();
     }
 
-    public Vector2 getPosBird() {
-        return posBird;
-    }
+//    public Vector2 getPosBird() {
+//        return posBird;
+//    }
 
     public TextureRegion getTexture() {
         return birdAnimation.getFrame();
@@ -74,6 +78,10 @@ public class Bird {
 
     public void dispose() {
         bird.dispose();
+    }
+
+    public Rectangle getBounds() {
+        return bounds;
     }
 
 

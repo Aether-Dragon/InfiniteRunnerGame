@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 public class Cupcake {
@@ -22,7 +23,8 @@ public class Cupcake {
         velocity = new Vector3(0, 0, 0);
         texture = new Texture("cupcake.png");
         cupcakeAnimation = new Animation(new TextureRegion(texture), 6, 0.5f);
-        bounds = new Rectangle(x, y, texture.getWidth(), texture.getHeight() / 6);
+        bounds = new Rectangle(x + 3, y, texture.getWidth() - 5, texture.getHeight() / 6);
+
 
     }
 
@@ -40,7 +42,7 @@ public class Cupcake {
 
         velocity.scl(1/dt);
 
-        bounds.setPosition(position.x, position.y);
+        bounds.setPosition(position.x + 3, position.y);
 
     }
 

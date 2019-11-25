@@ -40,6 +40,7 @@ public class PlayState extends State {
         spawnBird = 0;
         spawnPuddle = 4;
         rand = new Random();
+        life = 3;
 
     }
 
@@ -95,15 +96,22 @@ public class PlayState extends State {
                 gsm.set(new RestartState(gsm));
         }
 
-        for (int i = 0; i < birds.size; i++) {
-            Bird bird = birds.get(i);
+        for (Bird bird : birds) {
 
 //            if (cam.position.x - (cam.viewportWidth / 2) > birds.get(i).getPosBird().x + bird.BIRD_WIDTH) {
 //                birds.get(i).reposition(birds.get(i).getPosBird().x + ((rand.nextInt(GAP_MAX) + GAP_MIN) + bird.BIRD_WIDTH) * BIRD_COUNT);
 //            }
 
-            if (birds.get(i).collides(cupcake.getBounds()))
-                gsm.set(new RestartState(gsm));
+            if (bird.collides(cupcake.getBounds()))
+                if (life > 0){
+                    life = life - 1;
+
+                }
+        }
+
+        if (life == 0){
+            gsm.set(new RestartState(gsm));
+
         }
         cam.update();
 

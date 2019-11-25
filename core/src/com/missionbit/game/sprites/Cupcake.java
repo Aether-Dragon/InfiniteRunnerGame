@@ -18,6 +18,8 @@ public class Cupcake {
     private Rectangle bounds;
     private Animation cupcakeAnimation;
     private Texture texture;
+    private Texture jumping;
+    private Texture landing;
     private int jumps;
 
     public Cupcake(int x, int y ) {
@@ -25,6 +27,8 @@ public class Cupcake {
         velocity = new Vector3(0, 0, 0);
         texture = new Texture("cupcake.png");
         cupcakeAnimation = new Animation(new TextureRegion(texture), 6, 0.5f);
+        jumping = new Texture("cupcake_jumping.png");
+        landing = new Texture("cupcake_going_down.png");
         bounds = new Rectangle(x + 8, y, texture.getWidth() - 4, texture.getHeight() / 6);
         jumps = 0;
 
@@ -50,13 +54,20 @@ public class Cupcake {
             jumps = 0;
         }
 
+
     }
 
     public Vector3 getPosition() { return position; }
 
     public TextureRegion getTexture() {
-        return cupcakeAnimation.getFrame();
+        if(jumps == 0) {
+            return cupcakeAnimation.getFrame();
+        } else if(velocity.y < 0) {
+            return new TextureRegion(landing);
+        } else {
+            return new TextureRegion(jumping);
 
+        }
     }
 
     public void jump() {

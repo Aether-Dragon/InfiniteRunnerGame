@@ -36,11 +36,11 @@ public class Puddle {
         return player.overlaps(bounds);
     }
 
-    public TextureRegion getPuddle() {
+    public TextureRegion getTexture() {
         return puddleAnimation.getFrame();
     }
 
-    public Vector2 getPosPuddle() {
+    public Vector2 getPosition() {
         return posPuddle;
     }
 

@@ -11,7 +11,7 @@ public class Health {
 
     public Health(int x, int y) {
         position = new Vector3(x, y, 0);
-        health = new Texture("whole_life.png");
+        health = new Texture("life_4.png");
     }
 
 

@@ -6,44 +6,20 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 
-public class Puddle {
+public class Puddle extends Obstacle {
     public static final int PUDDLE_WIDTH = 128;
 
-    private Texture puddle;
-    private Vector2 posPuddle;
-    private Rectangle bounds;
-    private Animation puddleAnimation;
-
-
     public Puddle(int x) {
-        puddle = new Texture("puddleAnimation.png");
-        posPuddle = new Vector2(x, 0);
-        puddleAnimation = new Animation(new TextureRegion(puddle), 6, 0.25f);
-        bounds = new Rectangle(x + 6, posPuddle.y - 8, puddle.getWidth() - 6, puddleAnimation.getFrame().getRegionHeight());
+        texture = new Texture("puddleAnimation.png");
+        position = new Vector2(x, 0);
+        animation = new Animation(new TextureRegion(texture), 6, 0.25f);
+        bounds = new Rectangle(x + 6, position.y - 8, texture.getWidth() - 6, animation.getFrame().getRegionHeight());
     }
 
 
     public void update(float dt){
-        puddleAnimation.update(dt);
+        animation.update(dt);
     }
 
-    public void reposition(float x) {
-        posPuddle.set(x, 0);
-        bounds.setPosition(posPuddle.x, posPuddle.y);
-    }
-
-    public boolean collides(Rectangle player) {
-        return player.overlaps(bounds);
-    }
-
-    public TextureRegion getPuddle() {
-        return puddleAnimation.getFrame();
-    }
-
-    public Vector2 getPosPuddle() {
-        return posPuddle;
-    }
-
-    public void dispose() { puddle.dispose(); }
 }
 

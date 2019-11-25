@@ -40,7 +40,9 @@ public class PlayState extends State {
     public PlayState(GameStateManager gsm) {
         super(gsm);
         cupcake = new Cupcake(50, 0);
-        bg = new Texture("bg.png");
+        bg = new Texture("city.png");
+        birds = new Queue<>();
+        puddles = new Array<>();
         spawn = 0;
         rand = new Random();
         life = 3;
@@ -139,7 +141,8 @@ public class PlayState extends State {
         sb.setProjectionMatrix(cam.combined);
 
         sb.begin();
-        sb.draw(bg, cam.position.x - (cam.viewportWidth / 2), 0);
+        sb.draw(bg, cam.position.x - (cam.viewportWidth / 2),0, 265, 175);
+
 
         sb.draw(cupcake.getTexture(), cupcake.getPosition().x, cupcake.getPosition().y);
         sb.draw(healthbar.getHealth(), cam.position.x - (cam.viewportWidth / 2) , 143);

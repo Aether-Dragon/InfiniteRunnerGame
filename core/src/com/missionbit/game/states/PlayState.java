@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Queue;
 import com.missionbit.game.InfiniteRunner;
 import com.missionbit.game.sprites.Bird;
 import com.missionbit.game.sprites.Cupcake;
+import com.missionbit.game.sprites.Health;
 import com.missionbit.game.sprites.Puddle;
 
 import java.util.Random;
@@ -23,13 +24,13 @@ public class PlayState extends State {
     public static final int BIRD_COUNT = 4;
     private Cupcake cupcake;
     private Texture bg;
-    //private Bird bird;
     //TODO: fix puddle spacing
     private Queue<Bird> birds;
     private Array<Puddle> puddles;
     private Random rand;
     private float spawn;
     private int life;
+    private Health healthbar;
 
 
     public PlayState(GameStateManager gsm) {
@@ -41,6 +42,7 @@ public class PlayState extends State {
         spawn = 0;
         rand = new Random();
         life = 3;
+        healthbar = new Health(50, 0);
 
         for(int i = 1; i <= PUDDLE_COUNT; i++){
             if(i==1) {
@@ -65,6 +67,7 @@ public class PlayState extends State {
     public void update(float dt) {
         handleInput();
         cupcake.update(dt);
+        healthbar.update(dt);
 
         if (spawn > 10) {
             spawn = 0;
@@ -123,8 +126,9 @@ public class PlayState extends State {
         sb.draw(bg, cam.position.x - (cam.viewportWidth / 2), 0);
 
         sb.draw(cupcake.getTexture(), cupcake.getPosition().x, cupcake.getPosition().y);
+        sb.draw(healthbar.getHealth(), cam.position.x - (cam.viewportWidth / 2) , 143);
 
-        for (Puddle puddle : puddles) {
+         for (Puddle puddle : puddles) {
             sb.draw(puddle.getPuddle(), puddle.getPosPuddle().x, puddle.getPosPuddle().y);
         }
 
@@ -149,11 +153,11 @@ public class PlayState extends State {
     public void dispose() {
         bg.dispose();
         cupcake.dispose();
+        healthbar.dispose();
 
         for (Bird bird : birds) {
             bird.dispose();
         }
-
 
         for (Puddle puddle : puddles) {
             puddle.dispose();

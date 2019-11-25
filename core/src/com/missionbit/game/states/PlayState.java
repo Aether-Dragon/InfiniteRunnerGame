@@ -12,6 +12,7 @@ import com.missionbit.game.InfiniteRunner;
 import com.missionbit.game.sprites.Bird;
 import com.missionbit.game.sprites.Cupcake;
 import com.missionbit.game.sprites.Health;
+import com.missionbit.game.sprites.Obstacle;
 import com.missionbit.game.sprites.Puddle;
 
 import java.util.Random;
@@ -24,37 +25,31 @@ public class PlayState extends State {
     public static final int BIRD_COUNT = 4;
     private Cupcake cupcake;
     private Texture bg;
-    //TODO: fix puddle spacing
-    private Queue<Bird> birds;
-    private Array<Puddle> puddles;
     private Random rand;
     private float spawn;
     private int life;
     private Health healthbar;
+    private Queue<Obstacle> obstacles;
+    private Random rand;
+    private float spawn;
+    private float spawnTimer;
+    private int type;
+    private int life;
 
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
         cupcake = new Cupcake(50, 0);
         bg = new Texture("bg.png");
-        birds = new Queue<>();
-        puddles = new Array<>();
         spawn = 0;
         rand = new Random();
         life = 3;
         healthbar = new Health(50, 0);
-
-        for(int i = 1; i <= PUDDLE_COUNT; i++){
-            if(i==1) {
-                puddles.add(new Puddle(i * (100 + Puddle.PUDDLE_WIDTH)));
-
-            } else {
-                puddles.add(new Puddle(i * ((rand.nextInt(GAP_MAX) + GAP_MIN) + Puddle.PUDDLE_WIDTH)));
-
-            }
-        }
-
-
+        spawn = 4.5f;
+        spawnTimer = 0;
+        rand = new Random();
+        life = 3;
+        obstacles = new Queue<>();
     }
 
     @Override
@@ -96,20 +91,41 @@ public class PlayState extends State {
                 gsm.set(new RestartState(gsm));
         }
 
-        for (Bird bird : birds) {
-
-//            if (cam.position.x - (cam.viewportWidth / 2) > birds.get(i).getPosBird().x + bird.BIRD_WIDTH) {
-//                birds.get(i).reposition(birds.get(i).getPosBird().x + ((rand.nextInt(GAP_MAX) + GAP_MIN) + bird.BIRD_WIDTH) * BIRD_COUNT);
-//            }
-
-            if (bird.collides(cupcake.getBounds()))
-                if (life > 0){
-                    life = life - 1;
-
-                }
+        spawnTimer = rand.nextInt(3) + 2.5f;
+        if (spawn > spawnTimer) {
+            spawn = 0;
+            type = rand.nextInt(3);
+            switch (type) {
+                case 0:
+                    obstacles.addLast(new Bird((int) (cam.position.x + cam.viewportWidth / 2), 100));
+                    break;
+                case 1:
+                    obstacles.addLast(new Puddle((int) (cam.position.x + cam.viewportWidth / 2)));
+                    break;
+                case 2:
+                    obstacles.addLast(new Bird((int) (cam.position.x + cam.viewportWidth / 2), 100));
+                    obstacles.addLast(new Puddle((int) (cam.position.x + cam.viewportWidth / 2)));
+                    break;
+            }
+        } else {
+            spawn += dt;
         }
 
-        if (life == 0){
+        for (Obstacle o : obstacles) {
+            o.update(dt);
+            if (o.getPosition().x < cam.position.x - cam.viewportWidth / 2 - o.getTexture().getRegionWidth()) {
+                obstacles.removeFirst().dispose();
+            }
+            if (o.collides(cupcake.getBounds())) {
+                if (life > 0) {
+                    life = life - 1;
+                }
+            }
+        }
+
+        cam.position.x = cupcake.getPosition().x + 80;
+
+        if (life == 0) {
             gsm.set(new RestartState(gsm));
 
         }
@@ -127,25 +143,10 @@ public class PlayState extends State {
 
         sb.draw(cupcake.getTexture(), cupcake.getPosition().x, cupcake.getPosition().y);
         sb.draw(healthbar.getHealth(), cam.position.x - (cam.viewportWidth / 2) , 143);
-
-         for (Puddle puddle : puddles) {
-            //sb.draw(puddle.getPuddle(), puddle.getPosPuddle().x, puddle.getPosPuddle().y);
+        
+      for (Obstacle o : obstacles) {
+            sb.draw(o.getTexture(), o.getPosition().x, o.getPosition().y);
         }
-
-        for (Bird bird : birds) {
-            sb.draw(bird.getBird(), bird.getPosition().x, bird.getPosition().y);
-            // THIS IS ONLY FOR TESTING BOUNDARIES
-//            sb.end();
-//            ShapeRenderer r = new ShapeRenderer();
-//            r.setProjectionMatrix(cam.combined);
-//            r.setColor(Color.RED);
-//            r.begin(ShapeRenderer.ShapeType.Line);
-//            r.rect(bird.getBounds().x, bird.getBounds().y, bird.getBounds().width, bird.getBounds().height);
-//            r.end();
-//            sb.begin();
-        }
-
-
         sb.end();
     }
 
@@ -154,13 +155,9 @@ public class PlayState extends State {
         bg.dispose();
         cupcake.dispose();
         healthbar.dispose();
-
-        for (Bird bird : birds) {
-            bird.dispose();
-        }
-
-        for (Puddle puddle : puddles) {
-            puddle.dispose();
+      
+        for (Obstacle o : obstacles) {
+            o.dispose();
         }
 
         System.out.println("Play State Disposed");

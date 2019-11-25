@@ -28,21 +28,18 @@ public class PlayState extends State {
     private Random rand;
     private float spawn;
     private int life;
+    private int type;
     private Health healthbar;
     private Queue<Obstacle> obstacles;
-    private Random rand;
-    private float spawn;
+
     private float spawnTimer;
-    private int type;
-    private int life;
 
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
         cupcake = new Cupcake(50, 0);
         bg = new Texture("city.png");
-        birds = new Queue<>();
-        puddles = new Array<>();
+
         spawn = 0;
         rand = new Random();
         life = 3;
@@ -66,32 +63,11 @@ public class PlayState extends State {
         cupcake.update(dt);
         healthbar.update(dt);
 
-        if (spawn > 10) {
-            spawn = 0;
-            birds.addLast(new Bird((int) (cam.position.x + cam.viewportWidth / 2), 100));
-        } else {
-            spawn += dt;
-        }
 
-        for (Bird b : birds) {
-            b.update(dt);
-            if (b.getPosition().x < cam.position.x - cam.viewportWidth / 2 - b.getTexture().getRegionWidth()) {
-                birds.removeFirst().dispose();
-            }
-        }
 
         cam.position.x = cupcake.getPosition().x + 80;
 
-        for (int i = 0; i < puddles.size; i++) {
-            Puddle puddle = puddles.get(i);
 
-//            if (cam.position.x - (cam.viewportWidth / 2) > puddle.getPosPuddle().x + Puddle.PUDDLE_WIDTH) {
-//                puddle.reposition(puddle.getPosPuddle().x + ((rand.nextInt(GAP_MAX) + GAP_MIN) + Puddle.PUDDLE_WIDTH) * PUDDLE_COUNT);
-//            }
-
-            if (puddle.collides(cupcake.getBounds()))
-                gsm.set(new RestartState(gsm));
-        }
 
         spawnTimer = rand.nextInt(3) + 2.5f;
         if (spawn > spawnTimer) {
@@ -121,6 +97,15 @@ public class PlayState extends State {
             if (o.collides(cupcake.getBounds())) {
                 if (life > 0) {
                     life = life - 1;
+
+                    switch (life)
+                    {
+                        case 4: healthbar.setTexture("life_4.png");     break;
+                        case 3: healthbar.setTexture("life_3.png");     break;
+                        case 2: healthbar.setTexture("life_2.png");     break;
+                        case 1: healthbar.setTexture("life_1.png");     break;
+                        case 0: healthbar.setTexture("life_0.png");     break;
+                    }
                 }
             }
         }

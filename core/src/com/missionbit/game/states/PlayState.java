@@ -88,9 +88,9 @@ public class PlayState extends State {
         for (int i = 0; i < puddles.size; i++) {
             Puddle puddle = puddles.get(i);
 
-            if (cam.position.x - (cam.viewportWidth / 2) > puddle.getPosPuddle().x + Puddle.PUDDLE_WIDTH) {
-                puddle.reposition(puddle.getPosPuddle().x + ((rand.nextInt(GAP_MAX) + GAP_MIN) + Puddle.PUDDLE_WIDTH) * PUDDLE_COUNT);
-            }
+//            if (cam.position.x - (cam.viewportWidth / 2) > puddle.getPosPuddle().x + Puddle.PUDDLE_WIDTH) {
+//                puddle.reposition(puddle.getPosPuddle().x + ((rand.nextInt(GAP_MAX) + GAP_MIN) + Puddle.PUDDLE_WIDTH) * PUDDLE_COUNT);
+//            }
 
             if (puddle.collides(cupcake.getBounds()))
                 gsm.set(new RestartState(gsm));
@@ -129,7 +129,7 @@ public class PlayState extends State {
         sb.draw(healthbar.getHealth(), cam.position.x - (cam.viewportWidth / 2) , 143);
 
          for (Puddle puddle : puddles) {
-            sb.draw(puddle.getPuddle(), puddle.getPosPuddle().x, puddle.getPosPuddle().y);
+            //sb.draw(puddle.getPuddle(), puddle.getPosPuddle().x, puddle.getPosPuddle().y);
         }
 
         for (Bird bird : birds) {

@@ -29,6 +29,7 @@ public class PlayState extends State {
     private Array<Puddle> puddles;
     private Random rand;
     private float spawn;
+    private int life;
 
 
     public PlayState(GameStateManager gsm) {
@@ -39,6 +40,7 @@ public class PlayState extends State {
         puddles = new Array<>();
         spawn = 0;
         rand = new Random();
+        life = 3;
 
         for(int i = 1; i <= PUDDLE_COUNT; i++){
             if(i==1) {
@@ -64,7 +66,7 @@ public class PlayState extends State {
         handleInput();
         cupcake.update(dt);
 
-        if (spawn > 5) {
+        if (spawn > 10) {
             spawn = 0;
             birds.addLast(new Bird((int) (cam.position.x + cam.viewportWidth / 2), 100));
         } else {
@@ -91,15 +93,22 @@ public class PlayState extends State {
                 gsm.set(new RestartState(gsm));
         }
 
-        for (int i = 0; i < birds.size; i++) {
-            Bird bird = birds.get(i);
+        for (Bird bird : birds) {
 
 //            if (cam.position.x - (cam.viewportWidth / 2) > birds.get(i).getPosBird().x + bird.BIRD_WIDTH) {
 //                birds.get(i).reposition(birds.get(i).getPosBird().x + ((rand.nextInt(GAP_MAX) + GAP_MIN) + bird.BIRD_WIDTH) * BIRD_COUNT);
 //            }
 
-            if (birds.get(i).collides(cupcake.getBounds()))
-                gsm.set(new RestartState(gsm));
+            if (bird.collides(cupcake.getBounds()))
+                if (life > 0){
+                    life = life - 1;
+
+                }
+        }
+
+        if (life == 0){
+            gsm.set(new RestartState(gsm));
+
         }
         cam.update();
 

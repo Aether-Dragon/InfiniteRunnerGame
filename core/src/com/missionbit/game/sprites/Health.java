@@ -29,4 +29,8 @@ public class Health {
     {
         health.dispose();
     }
+
+    public void setTexture(String s) {
+        health = new Texture(s);
+    }
 }

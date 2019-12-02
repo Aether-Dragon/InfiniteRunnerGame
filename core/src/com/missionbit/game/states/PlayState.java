@@ -19,10 +19,6 @@ import java.util.Random;
 
 
 public class PlayState extends State {
-    public static final int GAP_MIN = 100;
-    public static final int GAP_MAX = 300;
-    private static final int PUDDLE_COUNT = 4;
-    public static final int BIRD_COUNT = 4;
     private Cupcake cupcake;
     private Texture bg;
     private Random rand;
@@ -31,15 +27,13 @@ public class PlayState extends State {
     private int type;
     private Health healthbar;
     private Queue<Obstacle> obstacles;
-
     private float spawnTimer;
-
+    private int type;
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
         cupcake = new Cupcake(50, 0);
         bg = new Texture("city.png");
-
         spawn = 0;
         rand = new Random();
         life = 3;
@@ -62,12 +56,6 @@ public class PlayState extends State {
         handleInput();
         cupcake.update(dt);
         healthbar.update(dt);
-
-
-
-        cam.position.x = cupcake.getPosition().x + 80;
-
-
 
         spawnTimer = rand.nextInt(3) + 2.5f;
         if (spawn > spawnTimer) {

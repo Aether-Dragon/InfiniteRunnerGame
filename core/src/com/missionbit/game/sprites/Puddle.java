@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Vector2;
 
 
 public class Puddle extends Obstacle {
-    public static final int PUDDLE_WIDTH = 128;
 
     public Puddle(int x) {
         texture = new Texture("puddleAnimation.png");
@@ -20,6 +19,7 @@ public class Puddle extends Obstacle {
     public void update(float dt){
         animation.update(dt);
     }
+
 
 }
 

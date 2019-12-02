@@ -19,10 +19,6 @@ import java.util.Random;
 
 
 public class PlayState extends State {
-    public static final int GAP_MIN = 100;
-    public static final int GAP_MAX = 300;
-    private static final int PUDDLE_COUNT = 4;
-    public static final int BIRD_COUNT = 4;
     private Cupcake cupcake;
     private Texture bg;
     private Random rand;
@@ -30,19 +26,14 @@ public class PlayState extends State {
     private int life;
     private Health healthbar;
     private Queue<Obstacle> obstacles;
-    private Random rand;
-    private float spawn;
     private float spawnTimer;
     private int type;
-    private int life;
 
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
         cupcake = new Cupcake(50, 0);
         bg = new Texture("city.png");
-        birds = new Queue<>();
-        puddles = new Array<>();
         spawn = 0;
         rand = new Random();
         life = 3;
@@ -65,33 +56,6 @@ public class PlayState extends State {
         handleInput();
         cupcake.update(dt);
         healthbar.update(dt);
-
-        if (spawn > 10) {
-            spawn = 0;
-            birds.addLast(new Bird((int) (cam.position.x + cam.viewportWidth / 2), 100));
-        } else {
-            spawn += dt;
-        }
-
-        for (Bird b : birds) {
-            b.update(dt);
-            if (b.getPosition().x < cam.position.x - cam.viewportWidth / 2 - b.getTexture().getRegionWidth()) {
-                birds.removeFirst().dispose();
-            }
-        }
-
-        cam.position.x = cupcake.getPosition().x + 80;
-
-        for (int i = 0; i < puddles.size; i++) {
-            Puddle puddle = puddles.get(i);
-
-//            if (cam.position.x - (cam.viewportWidth / 2) > puddle.getPosPuddle().x + Puddle.PUDDLE_WIDTH) {
-//                puddle.reposition(puddle.getPosPuddle().x + ((rand.nextInt(GAP_MAX) + GAP_MIN) + Puddle.PUDDLE_WIDTH) * PUDDLE_COUNT);
-//            }
-
-            if (puddle.collides(cupcake.getBounds()))
-                gsm.set(new RestartState(gsm));
-        }
 
         spawnTimer = rand.nextInt(3) + 2.5f;
         if (spawn > spawnTimer) {

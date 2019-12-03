@@ -28,7 +28,6 @@ public class PlayState extends State {
     private Health healthbar;
     private Queue<Obstacle> obstacles;
     private float spawnTimer;
-    private int type;
 
     public PlayState(GameStateManager gsm) {
         super(gsm);

@@ -28,7 +28,7 @@ public class PlayState extends State {
     private Health healthbar;
     private Queue<Obstacle> obstacles;
     private float spawnTimer;
-    private int type;
+
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
@@ -92,7 +92,6 @@ public class PlayState extends State {
                         case 3: healthbar.setTexture("life_3.png");     break;
                         case 2: healthbar.setTexture("life_2.png");     break;
                         case 1: healthbar.setTexture("life_1.png");     break;
-                        case 0: healthbar.setTexture("life_0.png");     break;
                     }
                 }
             }

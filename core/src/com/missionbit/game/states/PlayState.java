@@ -134,7 +134,7 @@ public class PlayState extends State {
             spawn += dt;
         }
     }
-
+  
     private void updateHealth() {
         switch (life) {
             case 3:

@@ -3,6 +3,7 @@ package com.missionbit.game.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -28,6 +29,13 @@ public class PlayState extends State {
     private Health healthbar;
     private Queue<Obstacle> obstacles;
     private float spawnTimer;
+<<<<<<< HEAD
+=======
+    private float invincibilityTimer;
+    private boolean isInvincible;
+    private float secondTimer;
+
+>>>>>>> 604528e99c57bb3397bd839ab4472f162bd3093b
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
@@ -42,6 +50,10 @@ public class PlayState extends State {
         rand = new Random();
         life = 3;
         obstacles = new Queue<>();
+        invincibilityTimer = 0f;
+        isInvincible = true;
+        secondTimer = 0;
+        RestartState.scoreTime = 0;
     }
 
     @Override
@@ -57,6 +69,55 @@ public class PlayState extends State {
         healthbar.update(dt);
 
         spawnTimer = rand.nextInt(3) + 2.5f;
+        spawnObstacles(dt);
+
+        updateObstacles(dt);
+
+        if (isInvincible) {
+            invincibilityTimer -= dt;
+            if (invincibilityTimer <= 0) {
+                invincibilityTimer = 0;
+                isInvincible = false;
+            }
+        }
+
+        updateHealth();
+
+        secondTimer += dt;
+        if(secondTimer >= 1f) {
+            RestartState.scoreTime += 1;
+            secondTimer = 0;
+        }
+
+        cam.position.x = cupcake.getPosition().x + 80;
+
+        if (life == 0) {
+            gsm.set(new RestartState(gsm));
+
+        }
+        cam.update();
+
+    }
+
+    private void updateObstacles(float dt) {
+        for (Obstacle o : obstacles) {
+            o.update(dt);
+            if (o.getPosition().x < cam.position.x - cam.viewportWidth / 2 - o.getTexture().getRegionWidth()) {
+                obstacles.removeFirst().dispose();
+            }
+            if (o.collides(cupcake.getBounds())) {
+                if (!isInvincible) {
+                    setInvincible();
+                    if (life > 0) {
+                        life = life - 1;
+
+                    }
+                }
+            }
+        }
+    }
+
+    private void spawnObstacles(float dt) {
         if (spawn > spawnTimer) {
             spawn = 0;
             type = rand.nextInt(3);
@@ -75,36 +136,28 @@ public class PlayState extends State {
         } else {
             spawn += dt;
         }
-
-        for (Obstacle o : obstacles) {
-            o.update(dt);
-            if (o.getPosition().x < cam.position.x - cam.viewportWidth / 2 - o.getTexture().getRegionWidth()) {
-                obstacles.removeFirst().dispose();
-            }
-            if (o.collides(cupcake.getBounds())) {
-                if (life > 0) {
-                    life = life - 1;
-
-                    switch (life)
-                    {
-                        case 4: healthbar.setTexture("life_4.png");     break;
-                        case 3: healthbar.setTexture("life_3.png");     break;
-                        case 2: healthbar.setTexture("life_2.png");     break;
-                        case 1: healthbar.setTexture("life_1.png");     break;
-                        case 0: healthbar.setTexture("life_0.png");     break;
-                    }
-                }
-            }
+    }
+  
+    private void updateHealth() {
+        switch (life) {
+            case 3:
+                healthbar.setTexture("life_4.png");
+                break;
+            case 2:
+                healthbar.setTexture("life_3.png");
+                break;
+            case 1:
+                healthbar.setTexture("life_2.png");
+                break;
+            case 0:
+                healthbar.setTexture("life_1.png");
+                break;
         }
+    }
 
-        cam.position.x = cupcake.getPosition().x + 80;
-
-        if (life == 0) {
-            gsm.set(new RestartState(gsm));
-
-        }
-        cam.update();
-
+    private void setInvincible() {
+            isInvincible = true;
+            invincibilityTimer = 2.5f;
     }
 
 
@@ -113,15 +166,16 @@ public class PlayState extends State {
         sb.setProjectionMatrix(cam.combined);
 
         sb.begin();
-        sb.draw(bg, cam.position.x - (cam.viewportWidth / 2),0, 265, 175);
+        sb.draw(bg, cam.position.x - (cam.viewportWidth / 2), 0, 265, 175);
 
 
         sb.draw(cupcake.getTexture(), cupcake.getPosition().x, cupcake.getPosition().y);
-        sb.draw(healthbar.getHealth(), cam.position.x - (cam.viewportWidth / 2) , 143);
-        
-      for (Obstacle o : obstacles) {
+        sb.draw(healthbar.getHealth(), cam.position.x - (cam.viewportWidth / 2), 143);
+
+        for (Obstacle o : obstacles) {
             sb.draw(o.getTexture(), o.getPosition().x, o.getPosition().y);
         }
+
         sb.end();
     }
 
@@ -130,7 +184,7 @@ public class PlayState extends State {
         bg.dispose();
         cupcake.dispose();
         healthbar.dispose();
-      
+
         for (Obstacle o : obstacles) {
             o.dispose();
         }

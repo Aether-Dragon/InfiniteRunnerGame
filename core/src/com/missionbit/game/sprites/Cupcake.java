@@ -25,10 +25,10 @@ public class Cupcake {
     public Cupcake(int x, int y ) {
         position = new Vector3(x, y, 0);
         velocity = new Vector3(0, 0, 0);
-        texture = new Texture("cupcake.png");
+        texture = new Texture("cupcake clone.png");
         cupcakeAnimation = new Animation(new TextureRegion(texture), 6, 0.5f);
-        jumping = new Texture("cupcake_jumping.png");
-        landing = new Texture("cupcake_going_down.png");
+        jumping = new Texture("cupcake_jumping-1.png");
+        landing = new Texture("cupcake_going_down-1.png");
         bounds = new Rectangle(x + 8, y, texture.getWidth() - 4, texture.getHeight() / 6);
         jumps = 0;
 

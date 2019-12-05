@@ -1,6 +1,7 @@
 package com.missionbit.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -20,6 +21,7 @@ public class RestartState extends State {
     private String highScoreText;
     BitmapFont score;
     BitmapFont highScoreFont;
+    private Sound sound;
 
     public RestartState(GameStateManager gsm) {
         super(gsm);
@@ -42,6 +44,9 @@ public class RestartState extends State {
         highScoreFont.setColor(Color.WHITE);
         scoreLayout.setText(score, finalScore);
         highScoreLayout.setText(highScoreFont, highScoreText);
+
+        sound = Gdx.audio.newSound(Gdx.files.internal("gameover.ogg"));
+        sound.play();
     }
 
     @Override
@@ -70,6 +75,11 @@ public class RestartState extends State {
 
     @Override
     public void dispose() {
-
+        background.dispose();
+        playBtn.dispose();
+        gameOver.dispose();
+        score.dispose();
+        highScoreFont.dispose();
+        sound.dispose();
     }
 }

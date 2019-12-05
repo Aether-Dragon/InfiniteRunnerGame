@@ -1,6 +1,7 @@
 package com.missionbit.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -32,6 +33,7 @@ public class PlayState extends State {
     private float invincibilityTimer;
     private boolean isInvincible;
     private float secondTimer;
+    private Sound loseLife;
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
@@ -50,6 +52,7 @@ public class PlayState extends State {
         isInvincible = true;
         secondTimer = 0;
         RestartState.scoreTime = 0;
+        loseLife = Gdx.audio.newSound(Gdx.files.internal("lifelost.ogg"));
     }
 
     @Override
@@ -106,7 +109,7 @@ public class PlayState extends State {
                     setInvincible();
                     if (life > 0) {
                         life = life - 1;
-
+                        loseLife.play();
                     }
                 }
             }
@@ -180,6 +183,7 @@ public class PlayState extends State {
         bg.dispose();
         cupcake.dispose();
         healthbar.dispose();
+        loseLife.dispose();
 
         for (Obstacle o : obstacles) {
             o.dispose();

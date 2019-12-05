@@ -31,7 +31,6 @@ public class Cupcake {
         landing = new Texture("cupcake_going_down-1.png");
         bounds = new Rectangle(x + 8, y, texture.getWidth() - 4, texture.getHeight() / 6);
         jumps = 0;
-
     }
 
     public void update(float dt) {

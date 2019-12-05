@@ -29,13 +29,9 @@ public class PlayState extends State {
     private Health healthbar;
     private Queue<Obstacle> obstacles;
     private float spawnTimer;
-<<<<<<< HEAD
-=======
     private float invincibilityTimer;
     private boolean isInvincible;
     private float secondTimer;
-
->>>>>>> 604528e99c57bb3397bd839ab4472f162bd3093b
 
     public PlayState(GameStateManager gsm) {
         super(gsm);

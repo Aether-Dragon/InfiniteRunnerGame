@@ -27,7 +27,7 @@ public class RestartState extends State {
         super(gsm);
         cam.setToOrtho(false, InfiniteRunner.WIDTH / 2, InfiniteRunner.HEIGHT / 2);
         background = new Texture("city.png");
-        playBtn = new Texture("playBtn.png");
+        playBtn = new Texture("playbtn.png");
         gameOver = new Texture("gameover.png");
 
         if (scoreTime > highScore) {
